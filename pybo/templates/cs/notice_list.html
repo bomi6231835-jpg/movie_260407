@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    customersevice-question_list
-
+    공지사항
 {% endblock %}
 
 {% block styles %}
-    <link rel="stylesheet" href="../static/question_list.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='question_list.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -19,10 +18,10 @@
 
                     <ul class="nav nav-underline">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">QNA</a>
+                            <a class="nav-link" aria-current="page" href="#">QNA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">공지사항</a>
+                            <a class="nav-link active" href="#">공지사항</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">1:1문의</a>
@@ -47,11 +46,38 @@
                 </thead>
 
                 <tbody>
+                {% if notice_list.items %}
+                    {% for notice in notice_list.items %}
+                        <tr>
+                            <td>{{ notice.theater }}</td>
 
+                            <td>
+                                <a href="#">
+                                    {{ notice.title }}
+                                </a>
+                            </td>
+
+                            <td>
+                                {{ notice.create_date.strftime('%y.%m.%d') }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">공지사항이 없습니다.</td>
+                    </tr>
+                {% endif %}
                 </tbody>
-
             </table>
-            <div id="more_option">더보기</div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-secondary" type="button">
+                    더보기 +
+                </button>
+                </table>
+            </div>
+            <div class="fixed-bottom">
+                <i class="bi bi-arrow-up-circle"></i>
+            </div>
         </div>
     </div>
 
