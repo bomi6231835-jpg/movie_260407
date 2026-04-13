@@ -11,8 +11,8 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 
-    <link rel="stylesheet" href="../static/reset.css">
-    <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 
 </head>
 
@@ -21,7 +21,7 @@
         <div class="headermain">
             <div id="logo">
                 <a href="{{ url_for('main.index') }}">
-                    <img src="../static/img/filmatique_white.png" alt="로고">
+                    <img src="{{ url_for('static', filename='img/filmatique_white.png') }}" alt="로고">
                 </a>
             </div>
 
@@ -63,15 +63,20 @@
         <div class="trailer">
             <div class="swiper mainSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="../static/img/main_movie_slide_1.jpg" alt="메인"></div>
-                    <div class="swiper-slide"><img src="../static/img/concrete.jpeg" alt="메인"></div>
-                    <div class="swiper-slide"><img src="../static/img/The_Battleship_Island.jpg" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/main_movie_slide_1.jpg') }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/concrete.jpeg') }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/The_Battleship_Island.jpg') }}" alt="메인"></div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
 
+
+        <div class="postertxt">
+            <p>현재 상영작</p>
+            <a href="#">더보기 ></a>
+        </div>
         <!-- Swiper -->
         <div class="poster">
             <div class="swiper posterSwiper">
@@ -97,46 +102,70 @@
         <!------ 이벤트 ------>
         <div class="eventtxt">
             <h5>이벤트</h5>
-            <a href="#">더보기 ></a>
+            <a href="{{ url_for('film.event') }}">더보기 ></a>
         </div>
         <div class="event">
             <div class="left">
                 <div class="eg1">
-                    <div class="content1"><img src="../static/img/event1.jpg" alt="이벤트"></div>
-                    <div class="content2"><img src="../static/img/event2.jpg" alt="이벤트"></div>
-                    <div class="content3"><img src="../static/img/event3.jpg" alt="이벤트"></div>
+                    <div class="content1"><img src="{{ url_for('static', filename='img/event1.jpg') }}" alt="이벤트"></div>
+                    <div class="content2"><img src="{{ url_for('static', filename='img/event2.jpg') }}" alt="이벤트"></div>
+                    <div class="content3"><img src="{{ url_for('static', filename='img/event3.jpg') }}" alt="이벤트"></div>
                 </div>
                 <div class="eg2">
-                    <div class="content4"><img src="../static/img/event4.jpg" alt="이벤트"></div>
-                    <div class="content5"><img src="../static/img/event5.jpg" alt="이벤트"></div>
+                    <div class="content4"><img src="{{ url_for('static', filename='img/event4.jpg') }}" alt="이벤트"></div>
+                    <div class="content5"><img src="{{ url_for('static', filename='img/event5.jpg') }}" alt="이벤트"></div>
                 </div>
             </div>
-            <div class="content6"><img src="../static/img/event6.jpg" alt="이벤트"></div>
+            <div class="content6"><img src="{{ url_for('static', filename='img/event6.jpg') }}" alt="이벤트"></div>
         </div>
 
         <!------ 시사회/무대인사 ------>
         <div class="screentxt">
             <h5>시사회/무대인사</h5>
-            <a href="#">더보기 ></a>
+            <a href="{{ url_for('film.event') }}">더보기 ></a>
         </div>
         <div class="screen">
-            <div class="scontent1"><img src="../static/img/screen1.jpg" alt="시사회"></div>
-            <div class="scontent2"><img src="../static/img/screen2.jpg" alt="시사회"></div>
-            <div class="scontent3"><img src="../static/img/screen3.jpg" alt="시사회"></div>
+            <div class="scontent1"><img src="{{ url_for('static', filename='img/screen1.jpg') }}" alt="시사회"></div>
+            <div class="scontent2"><img src="{{ url_for('static', filename='img/screen2.jpg') }}" alt="시사회"></div>
+            <div class="scontent3"><img src="{{ url_for('static', filename='img/screen3.jpg') }}" alt="시사회"></div>
         </div>
 
         <!------ 아이콘배너 ------>
-
-
+        <div class="icons">
+            <div class="user">
+                <a href="#"><img src="{{ url_for('static', filename='img/user.png') }}" alt="마이페이지">마이 페이지</a>
+            </div>
+            <div class="ticket">
+                <a href="#"><img src="{{ url_for('static', filename='img/ticket.png') }}" alt="예매">예 매</a>
+            </div>
+            <div class="store">
+                <a href="#"><img src="{{ url_for('static', filename='img/store.png') }}" alt="매점">매 점</a>
+            </div>
+            <div class="goods">
+                <a href="#"><img src="{{ url_for('static', filename='img/goods.png') }}" alt="굿즈">굿 즈</a>
+            </div>
+            <div class="movie">
+                <a href="#"><img src="{{ url_for('static', filename='img/movie.png') }}" alt="현재상영">현재 상영작</a>
+            </div>
+        </div>
+        
+        <!------ 공지사항 ------>
+        <div class="notice">
+            <p>공지사항</p>
+            <div class="noticetxt">
+                <a href="{{ url_for('cs.notice_list') }}">필름아티크 개인정보처리방침 개정 안내</a>
+                <a href="{{ url_for('cs.notice_list') }}">더보기 ></a>
+            </div>
+        </div>
 
         <div id="banner_AD">
-            <img src="../static/img/banner_AD.jpg" alt="영화광고">
+            <img src="{{ url_for('static', filename='img/banner_AD.jpg') }}" alt="영화광고">
         </div>
     </main>
 
     <footer>
         <div id="inner">
-            <img src="../static/img/filmatique_red.png" alt="footer-logo">
+            <img src="{{ url_for('static', filename='img/filmatique_red.png') }}" alt="footer-logo">
             <div class="footermenu">
                 <ul>
                     <li><a href="#">회사소개</a></li>
@@ -179,8 +208,8 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
-    <script src="../static/swiper.js"></script>
-
+    <script src="{{ url_for('static', filename='swiper.js') }}"></script>
+    <script src="{{ url_for('static', filename='movie.js') }}"></script>
 </body>
 
 </html>
