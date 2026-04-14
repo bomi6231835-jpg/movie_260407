@@ -3,6 +3,10 @@
     background-color: #eaeaea;
 }
 
+.signup_back .signup_inner a {
+    text-decoration: underline;
+}
+
 .container {
     width: 940px;
     height: auto;

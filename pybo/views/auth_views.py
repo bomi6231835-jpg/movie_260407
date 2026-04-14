@@ -18,11 +18,14 @@ def signup():
                 userid=form.userid.data,
                 username=form.userid.data,
                 password=generate_password_hash(form.password1.data),
-                email=form.email.data
+                email=form.email.data,
+                Terms_of_Service=form.Terms_of_Service.data,
+                Privacy_Policy=form.Privacy_Policy.data,
+                receive_emails=form.receive_emails.data
             )
             db.session.add(user)
             db.session.commit()
-            return redirect(url_for('main.index'))
+            return redirect(url_for('auth.login.html'))
         else:
             flash('이미 존재하는 아이디입니다.')
 
