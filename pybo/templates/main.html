@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Atique</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+</head>
+
+<body>
+    <header>
+        <div class="headermain">
+            <div id="logo">
+                <a href="{{ url_for('main.index') }}">
+                    <img src="{{ url_for('static', filename='img/filmatique_white.png') }}" alt="로고">
+                </a>
+            </div>
+
+            <nav>
+                <div class="topnav">
+                    <ul>
+                        <li><a href="{{ url_for('film.booking') }}">예 매</a></li>
+                        <li><a href="{{ url_for('film.movie_list') }}">영 화</a></li>
+                        <li><a href="{{ url_for('film.event') }}">이벤트</a></li>
+                        <li><a href="{{ url_for('film.store') }}">매 점</a></li>
+                        <li><a href="{{ url_for('film.store') }}">굿 즈</a></li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="topnav_right d-flex justify-content-end">
+                <ul class="navbar-nav">
+                    {% if g.user %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">
+                                {{ g.user.username }}님 (로그아웃)
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link"
+                            href="{{ url_for('auth.login') }}">로그인</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul>
+                    <li class="topnav_reservation">
+                        <a href="{{ url_for('film.booking') }}">바로 예매</a>
+                    </li>
+                </ul>
+            </div>                
+        </div>
+
+
+        <!-- Swiper -->
+        <div class="trailer">
+            <div class="swiper mainSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/main_movie_slide_1.jpg') }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/concrete.jpeg') }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/The_Battleship_Island.jpg') }}" alt="메인"></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+
+        <div class="postertxt">
+            <p>현재 상영작</p>
+            <a href="{{ url_for('film.movie_list') }}">더보기 ></a>
+        </div>
+        <!-- Swiper -->
+        <div class="poster">
+            <div class="swiper posterSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="txtbox">
+                            <a href="{{ url_for('film.booking') }}">예매하기</a>
+                            <a href="javascript:void(0)" class="detail">상세보기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </header>
+
+    <main>
+        <!------ 이벤트 ------>
+        <div class="eventtxt">
+            <h5>이벤트</h5>
+            <a href="{{ url_for('film.event') }}">더보기 ></a>
+        </div>
+        <div class="event">
+            <div class="left">
+                <div class="eg1">
+                    <div class="content1"><img src="{{ url_for('static', filename='img/event1.jpg') }}" alt="이벤트"></div>
+                    <div class="content2"><img src="{{ url_for('static', filename='img/event2.jpg') }}" alt="이벤트"></div>
+                    <div class="content3"><img src="{{ url_for('static', filename='img/event3.jpg') }}" alt="이벤트"></div>
+                </div>
+                <div class="eg2">
+                    <div class="content4"><img src="{{ url_for('static', filename='img/event4.jpg') }}" alt="이벤트"></div>
+                    <div class="content5"><img src="{{ url_for('static', filename='img/event5.jpg') }}" alt="이벤트"></div>
+                </div>
+            </div>
+            <div class="content6"><img src="{{ url_for('static', filename='img/event6.jpg') }}" alt="이벤트"></div>
+        </div>
+
+        <!------ 시사회/무대인사 ------>
+        <div class="screentxt">
+            <h5>시사회/무대인사</h5>
+            <a href="{{ url_for('film.event') }}">더보기 ></a>
+        </div>
+        <div class="screen">
+            <div class="scontent1"><img src="{{ url_for('static', filename='img/screen1.jpg') }}" alt="시사회"></div>
+            <div class="scontent2"><img src="{{ url_for('static', filename='img/screen2.jpg') }}" alt="시사회"></div>
+            <div class="scontent3"><img src="{{ url_for('static', filename='img/screen3.jpg') }}" alt="시사회"></div>
+        </div>
+
+        <!------ 아이콘배너 ------>
+        <div class="icons">
+            <div class="user">
+                <a href="#"><img src="{{ url_for('static', filename='img/user.png') }}" alt="마이페이지">마이 페이지</a>
+            </div>
+            <div class="ticket">
+                <a href="{{ url_for('film.booking') }}"><img src="{{ url_for('static', filename='img/ticket.png') }}" alt="예매">예 매</a>
+            </div>
+            <div class="store">
+                <a href="{{ url_for('film.store') }}"><img src="{{ url_for('static', filename='img/store.png') }}" alt="매점">매 점</a>
+            </div>
+            <div class="goods">
+                <a href="{{ url_for('film.store') }}"><img src="{{ url_for('static', filename='img/goods.png') }}" alt="굿즈">굿 즈</a>
+            </div>
+            <div class="movie">
+                <a href="{{ url_for('film.movie_list') }}"><img src="{{ url_for('static', filename='img/movie.png') }}" alt="현재상영">현재 상영작</a>
+            </div>
+        </div>
+        
+        <!------ 공지사항 ------>
+        <div class="notice">
+            <p>공지사항</p>
+            <div class="noticetxt">
+                <a href="{{ url_for('cs.notice_list') }}">필름아티크 개인정보처리방침 개정 안내</a>
+                <a href="{{ url_for('cs.notice_list') }}">더보기 ></a>
+            </div>
+        </div>
+
+        <div id="banner_AD">
+            <img src="{{ url_for('static', filename='img/banner_AD.jpg') }}" alt="영화광고">
+        </div>
+    </main>
+
+    <footer>
+        <div id="inner">
+            <img src="{{ url_for('static', filename='img/filmatique_red.png') }}" alt="footer-logo">
+            <div class="footermenu">
+                <ul>
+                    <li><a href="#">회사소개</a></li>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">이메일무단수집거부</a></li>
+                    <li><a href="#">고정형 영상정보처리기기 운영 및 관리방침</a></li>
+                    <li><a href="#">배정기준</a></li>
+                    <li><a href="#">채용안내</a></li>
+                    <li><a href="#">광고/임대문의</a></li>
+                    <li><a href="#">사회적책임</a></li>
+                </ul>
+            </div>
+            <div class="cominfo">
+                <p>필름아티크㈜</p>
+                <p>경기 수원시 팔달구 권광로 146 벽산그랜드코아 401호</p>
+            </div>
+            <div class="ceo">
+                <ul>
+                    <li>대표 이메일 ste-reo@naver.com</li>
+                    <li>고객센터 1588-0000 (유료)</li>
+                    <li>사업자등록번호 000-00-00000</li>
+                    <li>통신판매신고번호 2018-경기수원-1184</li>
+                    <li><a href="#">사업자정보확인</a></li>
+                </ul>
+                <ul>
+                    <li>대표 매운짬뽕</li>
+                    <li>개인정보 보호 책임자 매운짜장</li>
+                    <li>호스팅 제공자 필름아티크이노베이션</li>
+                </ul>
+            </div>
+
+            <p>Copyright © Filmatique All Right Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+    <script src="{{ url_for('static', filename='swiper.js') }}"></script>
+    <script src="{{ url_for('static', filename='movie.js') }}"></script>
+</body>
+
+</html>

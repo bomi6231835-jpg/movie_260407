@@ -1,0 +1,620 @@
+@charset "utf-8";
+
+/* header */
+header {
+    width: 100%;
+    height: auto;
+    background-color: black;
+}
+
+.headermain {
+    width: 1207px;
+    height: 160px;
+    margin: 0 auto;
+}
+
+header #logo {
+    width: 1207px;
+    position: relative;
+    top: 20px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #888;
+}
+
+header #logo a img {
+    width: 280px;
+    height: 90px;
+}
+
+nav {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+nav .topnav {
+    z-index: 2;
+}
+
+nav .topnav ul {
+    display: flex;
+}
+
+nav .topnav li::after {
+    content: "|";
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 12px;
+    color: #888;
+}
+
+nav .topnav li:last-child::after {
+    content: "";
+}
+
+.headermain a {
+    color: #fff;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.headermain a:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+.headermain .topnav_right {
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: relative;
+    bottom: 48px;
+    z-index: 1;
+}
+
+.headermain .topnav_right li {
+    list-style: none;
+}
+
+.headermain .topnav_right .topnav_reservation {
+    padding: 8px 0;
+}
+
+.trailer {
+    position: relative;
+    margin-bottom: 10px;
+}
+.trailer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+    z-index: 2;
+}
+.trailer::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+    z-index: 2;
+}
+
+.trailer .swiper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.trailer .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.trailer .swiper-slide img {
+    display: flex;
+    width: auto;
+    height: 800px;
+    margin: 0 auto;
+    object-fit: cover;
+}
+.trailer .swiper-button-next{
+    width: 30px;
+    height: 60px;
+    margin-right: 15px;
+    color: #888;
+}
+.trailer .swiper-button-prev{
+    width: 30px;
+    height: 60px;
+    margin-left: 15px;
+    color: #888;
+}
+
+.postertxt{
+    width: 1207px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.postertxt p{
+    font-size: 20px;
+    font-weight: 500;
+    font-family: "Franklin Gothic Medium";
+    color: #ffffff;
+}
+.postertxt a{
+    padding-top: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: "Franklin Gothic Medium";
+    color: #ffffff;
+}
+
+.poster{
+    width: 1207px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.posterSwiper{
+    display: flex;
+    justify-content: center;
+}
+
+
+.poster .swiper-slide {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+.poster .swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.poster .swiper-slide:hover{
+    cursor: pointer;
+}
+.poster .swiper-slide:hover .txtbox{
+    opacity: 1;
+}
+
+.poster .txtbox{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: all 1s;
+}
+.poster .txtbox a{
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+}
+
+.poster .swiper-button-next, .poster .swiper-button-prev{
+    width: 25px;
+    height: 50px;
+    color: #888;
+}
+
+.poster .swiper-button-prev{
+    left: -50px;
+}
+
+.poster .swiper-button-next{
+    right: -50px;
+}
+
+/* main */
+main {
+    width: 1207px;
+    height: 1924px;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+
+/* 이벤트 */
+.eventtxt{
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.event {
+    display: flex;
+    gap: 13px;
+}
+
+.eventtxt a{
+    font-size: 12px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+}
+
+.event .eg1{
+    width: 830px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.event .content1{
+    width: 226px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content1 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .content2{
+    width: 226px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content2 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.event .content3{
+    width: 353px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content3 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .eg2{
+    width: 830px;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 13px;
+}
+
+.event .content4{
+    width: 588px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content4 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .content5{
+    width: 226px;
+    height: 308px;
+    margin-right: 13px;
+}
+
+.event .content5 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.event .content6{
+    width: 363px;
+    height: 629px;
+}
+
+.event .content6 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* 시사회/무대인사 */
+.screentxt{
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.screentxt a{
+    font-size: 12px;
+}
+.screen {
+    display: flex;
+
+    gap: 14px;
+}
+
+.screen .scontent1{
+    width: 393px;
+    height: 230px;
+}
+.screen .scontent1 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.screen .scontent2{
+    width: 393px;
+    height: 230px;
+}
+.screen .scontent2 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+.screen .scontent3{
+    width: 393px;
+    height: 230px;
+}
+.screen .scontent3 img{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+/* 아이콘배너 */
+.icons{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+.user{
+    width: 231px;
+    height: 164px;
+    border-radius: 5px;
+    background-color: #cdcdcd;
+}
+.user a{
+    display: flex;
+    flex-direction: column;   /* 🔥 세로 정렬 */
+    align-items: center;      /* 가로 가운데 */
+    justify-content: center;  /* 세로 가운데 */
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    font-family: "Franklin Gothic Medium";
+}
+.user a img{
+    height: 50%;
+}
+.ticket{
+    width: 231px;
+    height: 164px;
+    border-radius: 5px;
+    background-color: #eaeaea;
+}
+.ticket a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    font-family: "Franklin Gothic Medium";
+}
+.ticket a img{
+    height: 50%;
+}
+.store{
+    width: 231px;
+    height: 164px;
+    border-radius: 5px;
+    background-color: #cdcdcd;
+}
+.store a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    font-family: "Franklin Gothic Medium";
+}
+.store a img{
+    height: 50%;
+}
+.goods{
+    width: 231px;
+    height: 164px;
+    border-radius: 5px;
+    background-color: #eaeaea;
+}
+.goods a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    font-family: "Franklin Gothic Medium";
+}
+.goods a img{
+    height: 50%;
+}
+.movie{
+    width: 231px;
+    height: 164px;
+    border-radius: 5px;
+    background-color: #cdcdcd;
+}
+.movie a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+    font-family: "Franklin Gothic Medium";
+}
+.movie a img{
+    height: 50%;
+}
+
+.notice{
+    margin-top: 40px;
+    border-bottom: 1px solid #888888;
+    display: flex;
+}
+.notice p{
+    font-family: "Franklin Gothic Medium";
+}
+.notice p::after{
+    content: ' | ' ;
+    margin-right: 5px;
+}
+.noticetxt{
+    width: 1114.55px;
+    display: flex;
+    justify-content: space-between;
+}
+.noticetxt a{
+    font-family: "Franklin Gothic Medium";
+}
+.noticetxt a:last-child{
+    font-size: 12px;
+}
+
+#banner_AD{
+    width: 1207px;
+    height: 222px;
+    margin: 150px 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+/* footer */
+footer {
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+    padding-top: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #eaeaea;
+}
+
+footer #inner {
+    width: 1207px;
+    margin: 0 auto;
+}
+
+footer #inner img {
+    width: 190px;
+    height: 50px;
+}
+
+#inner .footermenu ul {
+    display: flex;
+}
+
+#inner .footermenu ul li::after {
+    content: "|";
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 10px;
+}
+
+#inner .footermenu ul li:last-child:after {
+    content: "";
+}
+
+#inner .footermenu ul li a {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+}
+
+#inner .footermenu ul li:nth-of-type(3) a {
+    font-size: 12px;
+    text-decoration: underline;
+    color: #000;
+}
+
+#inner .cominfo p:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+}
+
+#inner .cominfo p:last-child {
+    color: #888;
+    font-size: 12px;
+}
+
+#inner .ceo ul {
+    display: flex;
+}
+
+#inner .ceo ul li::after {
+    content: "|";
+    margin-left: 6px;
+    margin-right: 6px;
+    font-size: 8px;
+    color: #888;
+}
+
+#inner .ceo ul li:nth-of-type(4)::after {
+    content: "";
+}
+
+#inner .ceo ul li:last-child::after {
+    content: "";
+}
+
+#inner .ceo ul li {
+    font-size: 12px;
+    color: #888;
+}
+
+#inner .ceo ul li a {
+    margin-left: 6px;
+    text-decoration: underline;
+    color: #000;
+}
+
+#inner p {
+    font-size: 12px;
+    color: #888;
+}

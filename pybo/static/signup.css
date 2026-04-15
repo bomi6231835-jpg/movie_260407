@@ -1,0 +1,31 @@
+.signup_back {
+    width: 100%;
+    background-color: #eaeaea;
+}
+
+.signup_back .signup_inner a {
+    text-decoration: underline;
+}
+
+.container {
+    width: 940px;
+    height: auto;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.container h5 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+.signup_inner {
+    background-color: white;
+    padding: 20px 100px;
+}
+
+.signup_back form {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

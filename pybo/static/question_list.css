@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+
+/* 헤더 */
+.header .container {
+    display: flex;
+    justify-content: center;
+}
+.header .container .menu{
+    width: 1206px; height: 276px;
+
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    
+}
+
+.header .container .service {
+    width: 902px; height: 67px;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 세로 가운데 */
+    margin: 35px auto 30px auto; /* 가로 중앙 + 위아래 여백 */
+    border: 1px solid #888888;
+    font-size: 20px; color: #333;
+}
+ .header .container #sub_title {
+     width: 152px;
+     height: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+     /*align-content: center;*/
+     margin: 50px auto 0 auto;
+    padding-bottom: 10px;
+     border-bottom: 2px solid #888888;
+     }
+
+.header .service ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    color: #333333;
+    justify-content: space-around;
+}
+
+.menu li {
+    color: #333;
+}
+/* 섹션01*/
+.section1 {
+    margin-bottom: 130px;
+
+}
+
+.section1 .container {
+    width: 1206px; height: auto;
+    min-height: 1400px;
+    padding-left: 0;
+    background-color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 145px;
+}
+
+.section1 .container .table{
+    width: 1062px; height: 1120px;
+    margin: 90px auto 40px auto;
+    background: #888888;
+    font-size: 20px;
+}
+
+.section1 table .table-secondary{
+    text-align: center;
+}
+
+.section1 .container td {
+    text-align: center;
+    align-content: center;
+    color: #666;
+    font-size: 17px;
+}
