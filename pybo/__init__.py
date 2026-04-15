@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 
 import config
+from views.cs_views import notice_list, notice_detail
 from .views import film_views
 
 naming_convention = {
@@ -33,8 +34,9 @@ def create_app():
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(film_views.bp)
-    # app.register_blueprint(question_views.bp)
-    #app.register_blueprint(question_list.bp)
     app.register_blueprint(cs_views.bp)
+    app.register_blueprint(notice_list().bp)
+    app.register_blueprint(notice_detail().bp)
+
 
     return app
