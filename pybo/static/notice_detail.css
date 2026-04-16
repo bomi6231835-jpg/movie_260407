@@ -14,7 +14,7 @@
 
 .section2 .container table {
     width: 1004px; height: 110px;
-    background: #888888;
+
     margin-top: 82px;
 }
 
@@ -27,8 +27,8 @@
 }
 
 .section2 .container p {
-    padding: 58px  150px 45px 150px;
-    font-size: 18px;
+    padding: 58px  140px 45px 140px;
+    font-size: 17px;
     font-weight: bold;
     line-height: 37px;
 
@@ -62,4 +62,8 @@
     display: flex;
     align-items: center;
     
+}
+.section2 .page-link {
+    color: #eeeeee;
+    border-color: #333333;
 }

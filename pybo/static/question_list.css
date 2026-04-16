@@ -27,6 +27,9 @@
     border: 1px solid #888888;
     font-size: 20px; color: #333;
 }
+.nav-underline .nav-link {
+    color: #333333 !important;
+}
  .header .container #sub_title {
      width: 152px;
      height: 50px;
@@ -47,18 +50,15 @@
     justify-content: space-around;
 }
 
-.menu li {
-    color: #333;
-}
+
 /* 섹션01*/
 .section1 {
     margin-bottom: 130px;
-
 }
 
 .section1 .container {
     width: 1206px; height: auto;
-    min-height: 1400px;
+    min-height: 1200px;
     padding-left: 0;
     background-color: #eaeaea;
     display: flex;
@@ -68,7 +68,7 @@
 }
 
 .section1 .container .table{
-    width: 1062px; height: 1120px;
+    width: 1062px; height: 950px;
     margin: 90px auto 40px auto;
     background: #888888;
     font-size: 20px;
