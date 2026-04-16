@@ -19,7 +19,6 @@ const tabMenu = document.querySelectorAll('.nav nav-underline');
             });
         });
 
-
      // 페이지버튼 클릭시
  const page_elements = document.querySelectorAll('.page-link')
         console.log(page_elements)
@@ -32,3 +31,5 @@ const tabMenu = document.querySelectorAll('.nav nav-underline');
                 }
             })
         })
+
+
