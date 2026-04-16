@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, abort
-import requests
+import requests, base64
 
 bp = Blueprint('film', __name__, url_prefix='/film')
 
@@ -75,6 +75,7 @@ def store_chain_denji():
 def store_chain_makima():
     return render_template('store_chain_makima.html')
 
+# 스토어 결제
 @bp.route('/store/pay', methods=['GET'])
 def store_pay():
     product_id = request.args.get('product_id', type=int)
@@ -108,37 +109,6 @@ def store_pay():
         abort(404)
 
     return render_template('store_pay.html', product=product)
-
-@bp.route('/confirm', methods=['POST'])
-def confirm():
-    data = request.json
-
-    url = "https://api.tosspayments.com/v1/payments/confirm"
-
-    headers = {
-        "Authorization": "Basic YOUR_SECRET_KEY"
-    }
-
-    body = {
-        "paymentKey": data['paymentKey'],
-        "orderId": data['orderId'],
-        "amount": data['amount']
-    }
-
-    res = requests.post(url, json=body, headers=headers)
-    return res.json()
-
-@bp.route('/store/pay/success')
-def success():
-    paymentKey = request.args.get('paymentKey')
-    orderId = request.args.get('orderId')
-    amount = request.args.get('amount')
-
-    return f"결제 성공! {orderId}"
-
-@bp.route('/store/pay/fail')
-def fail():
-    return "결제 실패"
 
 @bp.route('/movie/list', methods=['GET'])
 def movie_list():
