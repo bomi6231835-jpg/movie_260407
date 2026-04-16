@@ -21,7 +21,7 @@
                             <a class="nav-link" aria-current="page" href="#">QNA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ url_for("cs.notice_detail", notice_id=notice.id) }}">공지사항</a>
+                            <a class="nav-link active" href="{{ url_for("cs.notice_list") }}">공지사항</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">1:1문의</a>
@@ -47,16 +47,8 @@
 
                 <tbody>
                 {% if notice_list %}
-                    {% for cs in notice_list.items %}  <!--현재 페이지 해당 게시물-->
+                    {% for notice in notice_list.items %}  <!--현재 페이지 해당 게시물-->
                         <tr>
-                            <td>{{ loop.index }}</td>
-{#                            <td>{{ notice_list.total - (notice_list.page - 1) * notice_list.per_page - loop.index0 }}</td>#}
-                            <td>
-                                <a href="{{ url_for('cs.notice.detail', notice_id=notice.id) }}">{{ notice.subject }}</a>
-{#                                {% if notice.answer_set|length > 0 %}#}
-{#                                    <span class="text-danger small mx-1">[{{ notice.answer_set | length }}]</span>#}
-{#                                {% endif %}#}
-                            </td>
                             <td>{{ notice.theater }}</td>
                             <td>
                                 <a href="{{ url_for("cs.notice_detail", notice_id=notice.id) }}">{{ notice.title }}</a>
@@ -77,7 +69,7 @@
 
 
             <!--페이징처리 Start-->
-            <nav aria-label="Page navigation example">
+            <nav aria-label="...">
                 <ul class="pagination justify-content-center">
                     <!--이전버튼-->
                     {% if notice_list.has_prev %}
@@ -117,9 +109,13 @@
                             <a class="page-link" tabindex="-1" aria-disabled="true" href="javascript:void(0)">다음</a>
                         </li>
                     {% endif %}
+                </ul>
 
                 </ul>
             </nav>
+            <!--페이징처리 끝-->
+            {#            <a href="{{ url_for('notice.create') }}" class="btn btn-primary">질문 등록하기</a>#}
+
 
         </div>
     </div>
@@ -127,7 +123,6 @@
 
 {% block script %}
     <script src="{{ url_for('static', filename='notice_list.js') }}"></script>
-{#    <script src="../static/notice_list.js"></script>#}
 {% endblock %}
 
 

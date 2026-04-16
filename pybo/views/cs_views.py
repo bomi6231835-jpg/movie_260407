@@ -16,13 +16,14 @@ bp = Blueprint('cs',__name__, url_prefix='/cs')
 def notice_list():
     page = request.args.get('page', type=int, default=1)
 
+    notice_list = Notice.query.order_by(Notice.create_date.desc())
 
-    notice_list = Notice.query.paginate(page=page, per_page=10)  # 한페이지에 보여야할 게시물
+    notice_list = notice_list.paginate(page=page, per_page=10)  # 한페이지에 보여야할 게시물
 
-    return render_template("cs/notice/notice_list.html", notice_list=notice_list)
+    return render_template("cs/notice_list.html", notice_list=notice_list)
 
 # notice_detail
 @bp.route("/notice/detail/<int:notice_id>")
 def notice_detail(notice_id):
     notice_detail = Notice.query.get(notice_id)
-    return render_template("cs/notice/notice_detail.html", notice=notice_detail, notice_detail=notice_detail)
+    return render_template("cs/notice/notice_detail.html", notice=notice_detail)
