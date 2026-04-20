@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    공지사항 - 필름아티크
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='question_list.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='notice_detail.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="header">
+        <div class="container">
+            <div class="menu">
+                <h3 id="sub_title">고객센터</h3>
+                <div class="service">
+
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for("cs.faq_list") }}">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                               href="{{ url_for("cs.notice_list") }}">공지사항</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ url_for("cs.review_list") }}">1:1문의</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section5">
+        <div class="container">
+            <h5 class="my-3 border-bottom pb-2">회원정보</h5>
+
+            <form method="post" class="my-3">
+                <div class="mb-3">
+                    <label for="subject">제목</label>
+                    <input type="text" name="subject" id="subject" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="content">내용</label>
+                    <textarea type="text" name="content" id="content" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                    <input class="form-control" type="file" id="formFileMultiple" multiple>
+                </div>
+                <button type="submit" class="btn btn-primary">저장하기</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

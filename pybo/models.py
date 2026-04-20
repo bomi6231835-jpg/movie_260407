@@ -96,11 +96,12 @@ class Reservation(db.Model):
     seat_id = db.Column(db.Integer)
 
 # 1대1 문의 - review __공자사항
-class Privacy(db.Model):
+class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(100), nullable=False)
     info = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
+    image_path = db.Column(db.Text(), nullable=True)
     create_date = db.Column(db.DateTime(), nullable=False)
     # user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
     # user = db.relationship('User', backref=db.backref('answer_set'))
