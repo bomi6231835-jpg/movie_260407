@@ -1,63 +1,68 @@
+// 선택 상태
+let selected = {
+  theater: null,
+  movie: null,
+  date: null,
+  schedule: null
+};
+
+// DOM
 const regions = document.querySelectorAll(".region_list li");
 const theaters = document.querySelectorAll(".theater_list li");
 const movies = document.querySelectorAll(".movie li");
+const dateList = document.querySelector(".date ul");
+const timeList = document.querySelector(".time ul");
 
 // 지역 선택
 regions.forEach(region => {
   region.addEventListener("click", () => {
 
-    const selected = region.innerText;
+    const selectedRegion = region.innerText;
 
-    // 지역 active
     regions.forEach(r => r.classList.remove("active"));
     region.classList.add("active");
 
-    // 영화관 필터
     theaters.forEach(t => {
       t.style.display =
-        t.dataset.region === selected ? "block" : "none";
+        t.dataset.region === selectedRegion ? "block" : "none";
     });
-
   });
 });
 
-// 지역에 따른 영화관 선택
+// 극장 선택
 theaters.forEach(theater => {
   theater.addEventListener("click", () => {
 
-    // 기존 선택 제거
     theaters.forEach(t => t.classList.remove("selected"));
-
-    // 클릭한 극장 선택
     theater.classList.add("selected");
 
+    selected.theater = theater.dataset.theaterId;
+
+    loadSchedules(); // 바로 호출
   });
 });
 
-//영화 선택
+// 영화 선택
 movies.forEach(movie => {
   movie.addEventListener("click", () => {
 
-    // 기존 선택 제거
     movies.forEach(m => m.classList.remove("selected"));
-
-    // 클릭한 극장 선택
     movie.classList.add("selected");
 
+    selected.movie = movie.dataset.movieId;
+
+    loadSchedules(); // 바로 호출
   });
 });
 
-
-// 날짜 자동생성
-const dateList = document.querySelector(".date ul");
-
+// 날짜 생성
 const today = new Date();
 
 for (let i = 0; i < 7; i++) {
   const date = new Date();
   date.setDate(today.getDate() + i);
 
-  const day = date.getDate(); // 일
+  const day = date.getDate();
   const week = ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
 
   const li = document.createElement("li");
@@ -67,95 +72,93 @@ for (let i = 0; i < 7; i++) {
     <span class="week">${week}</span>
   `;
 
-  // 오늘 기본 선택
+  li.dataset.date = formatDate(date);
+
   if (i === 0) {
-  li.classList.add("selected");
+    li.classList.add("selected");
+    selected.date = li.dataset.date;
   }
 
   if (week === "토") li.style.color = "blue";
   if (week === "일") li.style.color = "red";
 
-
   dateList.appendChild(li);
 }
 
 // 날짜 선택
-const dates = document.querySelectorAll(".date li");
+document.addEventListener("click", (e) => {
+  const date = e.target.closest(".date li");
+  if (!date) return;
 
-dates.forEach(date => {
-  date.addEventListener("click", () => {
-
-    // 기존 선택 제거
-    dates.forEach(d => d.classList.remove("selected"));
-
-    // 선택
-    date.classList.add("selected");
-
-    // 🔥 추가된 부분
-    const index = [...dates].indexOf(date);
-
-    let times;
-
-    if (index % 2 === 0) {
-      times = generateTimes(8, 24);
-    } else {
-      times = generateTimes(9, 25);
-    }
-
-    renderTimes(times);
+  document.querySelectorAll(".date li").forEach(d => {
+    d.classList.remove("selected");
   });
+
+  date.classList.add("selected");
+
+  selected.date = date.dataset.date;
+
+  loadSchedules(); // 🔥 핵심
 });
 
 
-//시간 선택
-function generateTimes(startHour, endHour) {
-  const times = [];
+// 날짜 포맷
 
-  let current = new Date();
-  current.setHours(startHour, 0, 0, 0);
-
-  const end = new Date();
-  end.setHours(endHour, 0, 0, 0);
-
-  while (current <= end) {
-    const h = String(current.getHours()).padStart(2, "0");
-    const m = String(current.getMinutes()).padStart(2, "0");
-
-    times.push(`${h}:${m}`);
-
-    current.setMinutes(current.getMinutes() + 150); // 2시간 30분
-  }
-
-  return times;
+function formatDate(date) {
+  return date.toISOString().split("T")[0];
 }
 
-function renderTimes(times) {
-  const timeList = document.querySelector(".time ul");
+
+// 핵심 API 호출
+
+function loadSchedules() {
+  if (!selected.movie || !selected.date) return;
+
+  fetch(`/film/api/schedules?movie_id=${selected.movie}&date=${selected.date}&theater_id=${selected.theater}`)
+    .then(res => res.json())
+    .then(data => renderTimes(data));
+}
+
+// 시간표 렌더링
+
+function renderTimes(schedules) {
+
   timeList.innerHTML = "";
 
-  // 🔥 관 먼저 돌림
-  for (let screen = 1; screen <= 3; screen++) {
+  if (schedules.length === 0) {
+    timeList.innerHTML = "<li>상영시간 없음</li>";
+    return;
+  }
 
-    // 🔥 관별 줄 구분용 div
+  // 관별 그룹화
+  const grouped = {};
+
+  schedules.forEach(s => {
+    if (!grouped[s.screen]) grouped[s.screen] = [];
+    grouped[s.screen].push(s);
+  });
+
+  // 렌더링
+  Object.keys(grouped).forEach(screen => {
+
     const row = document.createElement("div");
     row.classList.add("screen_row");
 
-    times.forEach(time => {
+    grouped[screen].forEach(s => {
 
       const li = document.createElement("li");
 
-      const seats = Math.floor(Math.random() * 60);
+      const isSoldOut = s.remaining_seats <= 0;
 
       li.innerHTML = `
-        <button class="time_btn ${seats === 0 ? "disabled" : ""}"
-                data-time="${time}"
-                data-screen="${screen}"
-                ${seats === 0 ? "disabled" : ""}>
+        <button class="time_btn ${isSoldOut ? "disabled" : ""}"
+                data-schedule-id="${s.id}"
+                ${isSoldOut ? "disabled" : ""}>
           
-          ${screen}관 ${time}
+          ${screen} ${s.time}
           
           <span class="seat">
-            ${seats === 0 ? "매진" : `잔여 ${seats}석`}
+            ${isSoldOut ? "매진" : `잔여 ${s.remaining_seats}석`}
           </span>
         </button>
       `;
@@ -163,27 +166,46 @@ function renderTimes(times) {
       row.appendChild(li);
     });
 
-    timeList.appendChild(row); // 🔥 관 단위로 추가
-  }
+    timeList.appendChild(row);
+  });
 }
 
 
-const timeListEl = document.querySelector(".time");
+// 시간 선택
 
-timeListEl.addEventListener("click", (e) => {
+document.querySelector(".time").addEventListener("click", (e) => {
+
   const btn = e.target.closest(".time_btn");
   if (!btn) return;
 
-  // 기존 선택 제거
   document.querySelectorAll(".time_btn").forEach(b => {
     b.classList.remove("selected");
   });
 
-  
-  // 선택
   btn.classList.add("selected");
 
-  // console.log("선택된 시간:", btn.childNodes[0].textContent.trim());
+  selected.schedule = btn.dataset.scheduleId;
 });
 
-renderTimes(generateTimes(8, 24));
+
+// 좌석 이동
+
+document.getElementById("btnSeats").addEventListener("click", (e) => {
+
+  e.preventDefault();
+
+  if (!selected.schedule) {
+    alert("시간을 선택하세요");
+    return;
+  }
+
+  location.href = `/film/person/seat?schedule_id=${selected.schedule}`;
+});
+
+
+// 초기 실행 (선택된 영화 있을 경우)
+
+if (movieId) {
+  selected.movie = movieId;
+  loadSchedules();
+}

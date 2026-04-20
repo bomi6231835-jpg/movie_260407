@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, request, abort
+from datetime import datetime
+
+from flask import Blueprint, jsonify, render_template, request, abort, jsonify
 from pybo import db
-from pybo.models import Movie, Schedule, Screen
+from pybo.models import Movie, Schedule, Screen, Theater
 from sqlalchemy import func
 import requests, base64
 
@@ -30,6 +32,8 @@ def booking(movie_id):
     if not movie:
         abort(404)
 
+    theaters = Theater.query.all()
+
     # 날짜 리스트 (중복 제거)
     dates = db.session.query(
         func.date(Schedule.start_time)
@@ -53,10 +57,40 @@ def booking(movie_id):
         movie_id=movie_id,
         movies=movies,
         movie=movie,
+        theaters=theaters,
         dates=dates,
         schedules=schedules,
         selected_date=selected_date
     )
+
+@bp.route('/api/schedules')
+def get_schedules():
+    movie_id = request.args.get('movie_id', type=int)
+    date_str = request.args.get('date')
+    theater_id = request.args.get('theater_id', type=int)
+
+    date = datetime.strptime(date_str, "%Y-%m-%d")
+
+    schedules = Schedule.query.join(Screen).join(Theater).filter(
+        Schedule.movie_id == movie_id,
+        func.date(Schedule.start_time) == date.date(),
+        Theater.id == theater_id  
+    ).all()
+
+    result = []
+
+    for s in schedules:
+        reserved = len(s.reservations)
+        total = s.screen.total_seats
+
+        result.append({
+            "id": s.id,
+            "time": s.start_time.strftime("%H:%M"),
+            "screen": s.screen.name,
+            "remaining_seats": total - reserved
+        })
+
+    return jsonify(result)
 
 @bp.route('/person/seat', methods=['GET','POST'])
 def person_seat():
