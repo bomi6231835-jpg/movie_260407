@@ -1,14 +1,15 @@
 from datetime import datetime
 from pybo import create_app, db
-from pybo.models import Privacy
+from pybo.models import Review
 
-def insert_test_data(n=300):
+def insert_test_data(n=10):
     """테스트용 질문 데이터 n개 생성"""
     app = create_app()
     with app.app_context():  # Flask 컨텍스트 필요
         for i in range(n):
-            q = Privacy(
-                title='테스트 데이터 입니다:[%03d]' % i,
+            q = Review(
+                question='테스트 데이터 입니다:[%03d]' % i,
+                info = '답변작성',
                 content='내용없음',
                 create_date=datetime.now()
             )

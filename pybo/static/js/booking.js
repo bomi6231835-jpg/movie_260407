@@ -55,6 +55,7 @@ movies.forEach(movie => {
   });
 });
 
+
 // 날짜 생성
 const today = new Date();
 
@@ -186,7 +187,6 @@ document.querySelector(".time").addEventListener("click", (e) => {
 
   selected.schedule = btn.dataset.scheduleId;
 });
-
 
 // 좌석 이동
 
