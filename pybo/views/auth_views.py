@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, g, Flask
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -26,6 +28,8 @@ def signup():
                 username=form.username.data,
                 password=generate_password_hash(form.password1.data),
                 email=form.email.data,
+                phone=form.phone.data.replace('-', ''),
+                birth=datetime.strptime(form.birth.data, "%Y-%m-%d").date(),
                 Terms_of_Service=form.Terms_of_Service.data,
                 Privacy_Policy=form.Privacy_Policy.data,
                 receive_emails=form.receive_emails.data

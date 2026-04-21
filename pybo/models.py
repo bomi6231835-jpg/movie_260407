@@ -1,5 +1,7 @@
 from pybo import db
 
+from datetime import datetime
+
 # notice
 class Notice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,6 +31,9 @@ class User(db.Model):
     username = db.Column(db.String(150), nullable=False)
     password = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
+    birth = db.Column(db.Date, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     Terms_of_Service = db.Column(db.Boolean, nullable=False)
     Privacy_Policy = db.Column(db.Boolean, nullable=False)
     receive_emails = db.Column(db.Boolean, nullable=True, default='False')
