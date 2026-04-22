@@ -6,11 +6,12 @@ from flask import Blueprint, render_template, request, redirect, url_for, curren
 
 from werkzeug.utils import secure_filename
 
-from pybo.models import Faq
+from pybo.models import Faq, Review, Notice, User
 from pybo import db
 from pybo.forms import NoticeForm, ReviewForm
-from pybo.models import Notice
-from pybo.models import Review, User
+from pybo.views.auth_views import login_required
+
+
 
 bp = Blueprint('cs', __name__, url_prefix='/cs')
 
@@ -152,9 +153,11 @@ def faq_list():
 
 # 1:1 문의 목록
 @bp.route("/review/")
+@login_required
 def review_list():
     page = request.args.get('page', type=int, default=1)
     review_list=Review.query.order_by(Review.created_date.desc())
+    review_list=Review.query.filter_by(user_id=g.user.id)
     review_list = review_list.paginate(page=page, per_page=10)
 
 
@@ -163,6 +166,7 @@ def review_list():
 
 # 리뷰 폼 view함수
 @bp.route('/review/create/', methods=('GET', 'POST'))
+@login_required
 def review_create():
     form = ReviewForm()
     if request.method == 'POST' and form.validate_on_submit():
@@ -199,14 +203,96 @@ def review_create():
         db.session.add(review)
         db.session.commit()
 
-        return redirect(url_for('cs.review_list', review_id=review.id))
+        return redirect(url_for('cs.review_list'))
     return render_template('cs/review/review_form.html', form=form)
+
+# =====================
+#   리뷰 답변
+# =====================
+@bp.route('/review/answer/<int:review_id>/', methods=('GET', 'POST'))
+@notice_admin_required
+def review_answer(review_id):
+
+    review = Review.query.get_or_404(review_id)
+
+    if request.method == 'POST':
+
+        review.answer_review = request.form['answer_review']
+        review.answer_create_date = datetime.now()
+        review.answer_status = 'done'
+        review.answer_admin_id = g.user.id
+
+        db.session.commit()
+
+        flash('답변이 등록되었습니다.')
+
+        return redirect(url_for('cs.review_detail', review_id=review.id))
+
+    return render_template('cs/review/review_answer.html', review=review)
+
+# =====================
+#   리뷰 수정
+# =====================
+@bp.route('/review/modify/<int:review_id>/', methods=('GET','POST'))
+@notice_admin_required
+def review_modify(review_id):
+
+    review = Review.query.get_or_404(review_id)
+
+    if request.method == 'POST':
+        review.subject = request.form['subject']
+        review.content = request.form['content']
+
+        db.session.commit()
+
+        flash('수정되었습니다.')
+
+        return redirect(url_for('cs.review_detail', review_id=review.id))
+
+    return render_template('cs/review/review_modify.html', review=review)
+
+# =====================
+#   리뷰 삭제
+# =====================
+@bp.route('/review/delete/<int:review_id>/')
+@notice_admin_required
+def review_delete(review_id):
+
+    review = Review.query.get_or_404(review_id)
+
+    db.session.delete(review)
+    db.session.commit()
+
+    flash('문의가 삭제되었습니다.')
+
+    return redirect(url_for('cs.review_list'))
 
 
 # 리뷰 상세
 @bp.route('/review/detail/<int:review_id>', methods=['GET'])
-def review_detail(review_id):
-    # form = AnswerForm()
-    review = Review.query.get(review_id)
+@login_required
 
-    return render_template("cs/review/review_detail.html", review=review)
+def review_detail(review_id):
+    review = Review.query.get_or_404(review_id)
+
+    # 로그인 안 했으면 차단
+    if g.user is None:
+        flash('로그인이 필요합니다.')
+        return redirect(url_for('auth.login'))
+
+    # 관리자면 통과
+    if g.user.admin_role in ['super', 'manager']:
+        return render_template(
+            'cs/review/review_detail.html',
+            review=review
+        )
+
+    # 본인 글만 허용
+    if review.user != g.user:
+        flash('본인이 작성한 문의만 확인 가능합니다.')
+        return redirect(url_for('cs.review_list'))
+
+    return render_template(
+        'cs/review/review_detail.html',
+        review=review
+    )
