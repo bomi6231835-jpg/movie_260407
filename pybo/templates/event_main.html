@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}이벤트 - 필름아티크{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+    <div class="container d-flex flex-column align-items-center">
+        <img src="{{ images.event_img }}" alt="a">
+        <a href="{{ url_for('film.event') }}" class="btn btn-dark mt-5 px-4">
+            목록으로
+        </a>
+    </div>
+    
+{% endblock %} 

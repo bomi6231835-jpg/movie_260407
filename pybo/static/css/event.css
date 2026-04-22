@@ -21,6 +21,7 @@
 .container img {
     width: 387px;
     height: auto;
+    border-radius: 10px;
 }
 
 .container a {

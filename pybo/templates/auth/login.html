@@ -10,8 +10,18 @@
 <div class="login_back">
     <div class="container">
         <div class="login_inner">
+            {% if reset_mode %}
+            <h5 class="my-3">비밀번호 재설정</h5>
+
+            <form method="post">
+                <input type="password" name="new_password" placeholder="새 비밀번호" class="form-control mb-3">
+                <button type="submit" class="btn btn-danger w-100">변경하기</button>
+            </form>
+            {% else %}
+
             <h5 class="my-3 pb-1">로그인</h5>
             <h6 class="pb-3">아이디와 비밀번호를 입력하신 후, 로그인을 눌러주세요.</h6>
+
             <form method="post">
                 {{ form.csrf_token }}
                 {% include 'form_errors.html' %}
@@ -22,16 +32,54 @@
                 {{ form.password.label }}
                 {{ form.password(class="form-control mb-3") }}
 
-                <a href="#">
-                    <h6 class="login_find">아이디 찾기 | 비밀번호 찾기</h6>
-                </a>
-                
+                <div class="d-flex justify-content-end mt-2">
+                    <span class="login_find me-3" onclick="showFind('id')" style="cursor:pointer;">
+                        아이디 찾기
+                    </span>
+                    <span class="login_find" onclick="showFind('pw')" style="cursor:pointer;">
+                        비밀번호 찾기
+                    </span>
+                </div>
+
                 <button type="submit" class="btn btn-danger">로그인</button>
-                <a href="{{ url_for('auth.signup') }}"
-                    class="btn btn-danger">회원가입</a>
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-danger">회원가입</a>
             </form>
 
+                <!-- 아이디 찾기 -->
+                <div id="find-id-box" style="display:none;" class="mt-5 mb-3">
+                    <form method="post" action="{{ url_for('auth.find_id') }}">
+                        <input type="email" name="email" placeholder="이메일로 아이디 찾기" class="form-control mb-2">
+                        <button type="submit" class="btn btn-dark w-100">아이디 찾기</button>
+                    </form>
+                </div>
+
+                <!-- 비밀번호 찾기 -->
+                <div id="find-pw-box" style="display:none;" class="mt-5 mb-3">
+                    <form method="post" action="{{ url_for('auth.find_password') }}">
+                        <input type="email" name="email" placeholder="이메일로 비밀번호 찾기" class="form-control mb-2">
+                        <button type="submit" class="btn btn-dark w-100">비밀번호 재설정</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+function showFind(type) {
+    const idBox = document.getElementById('find-id-box');
+    const pwBox = document.getElementById('find-pw-box');
+
+    if (type === 'id') {
+        idBox.style.display = 'block';
+        pwBox.style.display = 'none';
+    } else {
+        idBox.style.display = 'none';
+        pwBox.style.display = 'block';
+    }
+}
+</script>
 {% endblock %}

@@ -11,61 +11,61 @@
         <h2>전체 이벤트</h2>
         <h3>영화</h3>
         <div id="event_1">
-            <a href="#">
-                <img src="../static/img/event_movie1.jpg" alt="">
-                <div class="itm_date">2026.04.17 ~ 2026.04.30</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트1') }}">
+                <img src="{{ event_1.img_url }}" alt="">
+                <div class="itm_date">2026.04.22 ~ 2026.04.28</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_movie2.jpg" alt="">
-                <div class="itm_date">2026.04.15 ~ 2026.04.21</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트2') }}">
+                <img src="{{ event_2.img_url }}" alt="">
+                <div class="itm_date">2026.04.22 ~ 2026.04.28</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_movie3.jpg" alt="">
-                <div class="itm_date">2026.04.15 ~ 2026.04.21</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트3') }}">
+                <img src="{{ event_3.img_url }}" alt="">
+                <div class="itm_date">2026.04.22 ~ 2026.04.28</div>
             </a>
         </div>
         <h3>시사회/무대인사</h3>
         <div id="event_2">
-            <a href="#">
-                <img src="../static/img/event_stage1.jpg" alt="">
-                <div class="itm_date">2026.05.02 ~ 2026.05.05</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트4') }}">
+                <img src="{{ event_4.img_url }}" alt="">
+                <div class="itm_date">2026.05.01 ~ 2026.05.02</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_stage2.jpg" alt="">
+            <a href="{{ url_for('film.event_detail', img_name='이벤트5') }}">
+                <img src="{{ event_5.img_url }}" alt="">
                 <div class="itm_date">2026.04.25 ~ 2026.04.26</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_stage3.jpg" alt="">
-                <div class="itm_date">2026.04.18 ~ 2026.04.19</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트6') }}">
+                <img src="{{ event_6.img_url }}" alt="">
+                <div class="itm_date">2026.04.21 ~ 2026.04.21</div>
             </a>
         </div>
         <h3>HOT</h3>
         <div id="event_3">
-            <a href="#">
-                <img src="../static/img/event_hot3.jpg" alt="">
-                <div class="itm_date">2026.04.19 ~ 2026.04.19</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트7') }}">
+                <img src="{{ event_7.img_url }}" alt="">
+                <div class="itm_date">2026.05.01 ~ 2026.05.31</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_hot2.jpg" alt="">
-                <div class="itm_date">2026.04.13 ~ 2026.05.31</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트8') }}">
+                <img src="{{ event_8.img_url }}" alt="">
+                <div class="itm_date">2026.04.20 ~ 2026.09.06</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_hot1.jpg" alt="">
-                <div class="itm_date">2026.04.13 ~ 2026.05.31</div>
+            <a href="{{ url_for('film.event_detail', img_name='이벤트9') }}">
+                <img src="{{ event_9.img_url }}" alt="">
+                <div class="itm_date">2026.04.17 ~ 2026.05.10</div>
             </a>
         </div>
         <h3>제휴할인</h3>
         <div id="event_4">
-            <a href="#">
-                <img src="../static/img/event_sale1.jpg" alt="">
+            <a href="{{ url_for('film.event_detail', img_name='이벤트10') }}">
+                <img src="{{ event_10.img_url }}" alt="">
                 <div class="itm_date">2026.04.01 ~ 2026.12.31</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_sale2.jpg" alt="">
+            <a href="{{ url_for('film.event_detail', img_name='이벤트11') }}">
+                <img src="{{ event_11.img_url }}" alt="">
                 <div class="itm_date">2026.04.01 ~ 2026.12.31</div>
             </a>
-            <a href="#">
-                <img src="../static/img/event_sale3.jpg" alt="">
+            <a href="{{ url_for('film.event_detail', img_name='이벤트12') }}">
+                <img src="{{ event_12.img_url }}" alt="">
                 <div class="itm_date">2026.03.25 ~ 2026.04.15</div>
             </a>
         </div>

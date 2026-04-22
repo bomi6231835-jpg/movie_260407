@@ -21,7 +21,7 @@
         <div class="headermain">
             <div id="logo">
                 <a href="{{ url_for('main.index') }}">
-                    <img src="{{ url_for('static', filename='img/filmatique_white.png') }}" alt="로고">
+                    <img src="{{ logo_1.img_url }}" alt="로고">
                 </a>
             </div>
 
@@ -64,12 +64,9 @@
         <div class="trailer">
             <div class="swiper mainSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/main_movie_slide_1.jpg') }}"
-                            alt="메인"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img/concrete.jpeg') }}" alt="메인">
-                    </div>
-                    <div class="swiper-slide"><img
-                            src="{{ url_for('static', filename='img/The_Battleship_Island.jpg') }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ main_1.img_url }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ main_2.img_url }}" alt="메인"></div>
+                    <div class="swiper-slide"><img src="{{ main_3.img_url }}" alt="메인"></div>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -113,16 +110,16 @@
         <div class="event">
             <div class="left">
                 <div class="eg1">
-                    <div class="content1"><img src="{{ url_for('static', filename='img/event1.jpg') }}" alt="이벤트"></div>
-                    <div class="content2"><img src="{{ url_for('static', filename='img/event2.jpg') }}" alt="이벤트"></div>
-                    <div class="content3"><img src="{{ url_for('static', filename='img/event3.jpg') }}" alt="이벤트"></div>
+                    <div class="content1"><img src="{{ event_1.img_url }}" alt="이벤트"></div>
+                    <div class="content2"><img src="{{ event_2.img_url }}" alt="이벤트"></div>
+                    <div class="content3"><img src="{{ event_3.img_url }}" alt="이벤트"></div>
                 </div>
                 <div class="eg2">
-                    <div class="content4"><img src="{{ url_for('static', filename='img/event4.jpg') }}" alt="이벤트"></div>
-                    <div class="content5"><img src="{{ url_for('static', filename='img/event5.jpg') }}" alt="이벤트"></div>
+                    <div class="content4"><img src="{{ event_4.img_url }}" alt="이벤트"></div>
+                    <div class="content5"><img src="{{ event_5.img_url }}" alt="이벤트"></div>
                 </div>
             </div>
-            <div class="content6"><img src="{{ url_for('static', filename='img/event6.jpg') }}" alt="이벤트"></div>
+            <div class="content6"><img src="{{ event_6.img_url }}" alt="이벤트"></div>
         </div>
 
         <!------ 시사회/무대인사 ------>
@@ -131,29 +128,29 @@
             <a href="{{ url_for('film.event') }}">더보기 ></a>
         </div>
         <div class="screen">
-            <div class="scontent1"><img src="{{ url_for('static', filename='img/screen1.jpg') }}" alt="시사회"></div>
-            <div class="scontent2"><img src="{{ url_for('static', filename='img/screen2.jpg') }}" alt="시사회"></div>
-            <div class="scontent3"><img src="{{ url_for('static', filename='img/screen3.jpg') }}" alt="시사회"></div>
+            <div class="scontent1"><img src="{{ screen_1.img_url }}" alt="시사회"></div>
+            <div class="scontent2"><img src="{{ screen_2.img_url }}" alt="시사회"></div>
+            <div class="scontent3"><img src="{{ screen_3.img_url }}" alt="시사회"></div>
         </div>
 
         <!------ 아이콘배너 ------>
         <div class="icons">
             <div class="user">
-                <a href="{{ url_for('film.mypage') }}"><img src="{{ url_for('static', filename='img/user.png') }}" alt="마이페이지">마이 페이지</a>
+                <a href="{{ url_for('film.mypage') }}"><img src="{{ icon_1.img_url }}" alt="마이페이지">마이 페이지</a>
             </div>
             <div class="ticket">
-                <a href="{{ url_for('film.booking', movie_id=first_movie.id) }}"><img src="{{ url_for('static', filename='img/ticket.png') }}"
+                <a href="{{ url_for('film.booking', movie_id=first_movie.id) }}"><img src="{{ icon_2.img_url }}"
                         alt="예매">예 매</a>
             </div>
             <div class="store">
-                <a href="{{ url_for('store.store_main') }}"><img src="{{ url_for('static', filename='img/store.png') }}" alt="스토어">스토어</a>
+                <a href="{{ url_for('store.store_main') }}"><img src="{{ icon_3.img_url }}" alt="스토어">스토어</a>
             </div>
             <div class="noticeicon">
-                <a href="{{ url_for('cs.notice_list') }}"><img src="{{ url_for('static', filename='img/notice.png') }}"
+                <a href="{{ url_for('cs.notice_list') }}"><img src="{{ icon_4.img_url }}"
                         alt="공지사항">공지사항</a>
             </div>
             <div class="movie">
-                <a href="{{ url_for('film.movie_list') }}"><img src="{{ url_for('static', filename='img/movie.png') }}"
+                <a href="{{ url_for('film.movie_list') }}"><img src="{{ icon_5.img_url }}"
                         alt="현재상영">현재 상영작</a>
             </div>
         </div>
@@ -168,13 +165,13 @@
         </div>
 
         <div id="banner_AD">
-            <img src="{{ url_for('static', filename='img/banner_AD.jpg') }}" alt="영화광고">
+            <img src="{{ banner.img_url }}" alt="영화광고">
         </div>
     </main>
 
     <footer>
         <div id="inner">
-            <img src="{{ url_for('static', filename='img/filmatique_red.png') }}" alt="footer-logo">
+            <img src="{{ logo_2.img_url }}" alt="footer-logo">
             <div class="footermenu">
                 <ul>
                     <li><a href="#">회사소개</a></li>

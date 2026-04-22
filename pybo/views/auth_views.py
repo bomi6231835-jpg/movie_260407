@@ -79,6 +79,49 @@ def logout():
     session.clear()
     return redirect(url_for('main.index'))
 
+@bp.route('/find-id', methods=['POST'])
+def find_id():
+    email = request.form.get('email')
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        flash(f'아이디는 {user.userid} 입니다.')
+    else:
+        flash('해당 이메일이 존재하지 않습니다.')
+
+    return redirect(url_for('auth.login'))
+
+@bp.route('/find-password', methods=['POST'])
+def find_password():
+    email = request.form.get('email')
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        return redirect(url_for('auth.reset_password', user_id=user.id))
+    else:
+        flash('해당 이메일이 존재하지 않습니다.')
+        return redirect(url_for('auth.login'))
+    
+@bp.route('/reset-password/<int:user_id>', methods=['GET', 'POST'])
+def reset_password(user_id):
+    user = User.query.get_or_404(user_id)
+
+    if request.method == 'POST':
+        new_password = request.form.get('new_password')
+
+        if not new_password:
+            flash('비밀번호를 입력해주세요.')
+            return redirect(request.url)
+
+        user.password = generate_password_hash(new_password)
+        db.session.commit()
+
+        flash('비밀번호가 변경되었습니다.')
+        return redirect(url_for('auth.login'))
+
+    return render_template('auth/login.html', reset_mode=True)
+
+
 #라우팅 함수보다 먼저 실행
 @bp.before_app_request
 def load_logged_in_user():
@@ -95,6 +138,7 @@ def login_required(view):
 
         # 로그인 안 된 경우
         if g.user is None:
+            flash('로그인이 필요한 서비스입니다.')
             _next = request.url if request.method == 'GET' else ''
             return redirect(url_for('auth.login', next=_next))
 
