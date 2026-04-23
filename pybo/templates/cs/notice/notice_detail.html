@@ -144,14 +144,16 @@
 {% endblock %}
 
 {% block script %}
-<script>
-    const delete_btns = document.querySelectorAll('.delete');
-    delete_btns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            if (confirm('정말로 삭제 하시겠습니까?')) {
-                location.href = this.dataset.uri;
-            }
+
+    <script src="{{ url_for('static', filename='js/notice_list.js') }}"></script>
+    <script>
+        const delete_btns = document.querySelectorAll('.delete');
+        delete_btns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                if (confirm('정말로 삭제 하시겠습니까?')) {
+                    location.href = this.dataset.uri;
+                }
+            })
         })
-    })
-</script>
+    </script>
 {% endblock %}
