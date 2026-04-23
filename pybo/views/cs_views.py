@@ -42,7 +42,8 @@ def notice_admin_required(view):
 def notice_list():
     page = request.args.get('page', type=int, default=1)
 
-    notice_list = Notice.query.order_by(Notice.create_date.desc())
+    notice_list=Notice.query.order_by(Notice.created_date.desc())
+
 
     notice_list = notice_list.paginate(page=page, per_page=15)  # 한페이지에 보여야할 게시물
 
@@ -52,12 +53,25 @@ def notice_list():
 # notice_detail
 @bp.route("/notice/detail/<int:notice_id>")
 def notice_detail(notice_id):
-    notice_detail = Notice.query.get(notice_id)
-    prev_notice = Notice.query.get(notice_id - 1)
-    next_notice = Notice.query.get(notice_id + 1)
-    return render_template("cs/notice/notice_detail.html", notice=notice_detail, prev_notice=prev_notice,
-                           next_notice=next_notice)
 
+    notice = Notice.query.get_or_404(notice_id)
+
+    # 이전 글 (현재 글보다 id 작은 것 중 가장 큰 값)
+    prev_notice = Notice.query.filter(
+        Notice.id < notice_id
+    ).order_by(Notice.id.desc()).first()
+
+    # 다음 글 (현재 글보다 id 큰 것 중 가장 작은 값)
+    next_notice = Notice.query.filter(
+        Notice.id > notice_id
+    ).order_by(Notice.id.asc()).first()
+
+    return render_template(
+        "cs/notice/notice_detail.html",
+        notice=notice,
+        prev_notice=prev_notice,
+        next_notice=next_notice
+    )
 # ===============================
 # 공지사항 등록
 # 관리자만 가능 (추가)
@@ -157,7 +171,7 @@ def faq_list():
 def review_list():
     page = request.args.get('page', type=int, default=1)
     review_list=Review.query.order_by(Review.created_date.desc())
-    review_list=Review.query.filter_by(user_id=g.user.id)
+
     review_list = review_list.paginate(page=page, per_page=10)
 
 
@@ -286,6 +300,7 @@ def review_detail(review_id):
             'cs/review/review_detail.html',
             review=review
         )
+
 
     # 본인 글만 허용
     if review.user != g.user:
