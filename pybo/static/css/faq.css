@@ -5,7 +5,7 @@
 
 .section3 .container {
     width: 1207px;
-    height: auto;    
+    height: auto;
     padding-left: 0;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: #eaeaea;
@@ -27,13 +27,13 @@
     margin-left: 0;
 }
 
-.section3 .form-select {    
+.section3 .form-select {
     margin-top: 15px;
     margin-left: 20px;
 }
 
 /* ===============================
-   관리자 버튼   
+   관리자 버튼
 =============================== */
 
 /* 버튼 영역 */
@@ -47,7 +47,7 @@
 .admin-btn-box .btn,
 .btn-edit,
 .btn-delete{
-    border-radius: 6px;    
+    border-radius: 6px;
     font-weight: 500;
     padding: 6px 14px;
     transition: all 0.2s ease;
@@ -60,7 +60,7 @@
     margin-right: 15px;
     font-size: 15px;
     background: #111111;
-    color: white;
+    color: #ffffff;
 }
 
 .admin-btn-box .btn-primary:hover{

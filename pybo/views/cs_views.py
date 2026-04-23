@@ -42,7 +42,8 @@ def notice_admin_required(view):
 def notice_list():
     page = request.args.get('page', type=int, default=1)
 
-    notice_list = Notice.query.order_by(Notice.create_date.desc())
+    notice_list=Notice.query.order_by(Notice.created_date.desc())
+
 
     notice_list = notice_list.paginate(page=page, per_page=15)  # 한페이지에 보여야할 게시물
 
@@ -52,7 +53,7 @@ def notice_list():
 # notice_detail
 @bp.route("/notice/detail/<int:notice_id>")
 def notice_detail(notice_id):
-
+  
     notice = Notice.query.get_or_404(notice_id)
 
     # 이전 글 (현재 글보다 id 작은 것 중 가장 큰 값)
@@ -71,7 +72,6 @@ def notice_detail(notice_id):
         prev_notice=prev_notice,
         next_notice=next_notice
     )
-
 # ===============================
 # 공지사항 등록
 # 관리자만 가능 (추가)
@@ -225,7 +225,7 @@ def faq_delete(faq_id):
 def review_list():
     page = request.args.get('page', type=int, default=1)
     review_list=Review.query.order_by(Review.created_date.desc())
-    review_list=Review.query.filter_by(user_id=g.user.id)
+
     review_list = review_list.paginate(page=page, per_page=10)
 
 
@@ -354,6 +354,7 @@ def review_detail(review_id):
             'cs/review/review_detail.html',
             review=review
         )
+
 
     # 본인 글만 허용
     if review.user != g.user:

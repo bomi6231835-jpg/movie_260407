@@ -13,10 +13,8 @@ class Notice(db.Model):
     theater = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(200), nullable=False)
     content = db.Column(db.Text(), nullable=False)
-    create_date = db.Column(db.DateTime(), nullable=False)
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'), nullable=False)
-    # user = db.relationship('User', backref=db.backref('answer_set'))
-    # modify_date = db.Column(db.DateTime(), nullable=True)
+    created_date = db.Column(db.DateTime, nullable=False)
+
 
 # Answer-답변 창
 class Answer(db.Model):
