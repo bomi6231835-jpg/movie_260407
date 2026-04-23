@@ -17,6 +17,27 @@
 
 }
 
+.container .menu li {
+    position: relative;
+    padding-top: 20px;
+}
+
+.container .menu li:after {
+    content: '';
+    width: 0;
+    height: 3px;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    background-color: black;
+    transition: all 1s ease;
+}
+
+.container .menu li:hover:after {
+    width: 100%;
+}
+
+
 .header .container .service {
     width: 902px; height: 67px;
     display: flex;

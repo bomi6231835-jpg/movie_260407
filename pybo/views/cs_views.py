@@ -298,7 +298,41 @@ def review_answer(review_id):
 
     return render_template('cs/review/review_answer.html', review=review)
 
+# =====================
+#   리뷰 수정
+# =====================
+@bp.route('/review/modify/<int:review_id>/', methods=('POST',))
+def review_modify(review_id):
+    review = Review.query.get_or_404(review_id)
 
+    if not (g.user.admin_role in ['super','manager'] or not review.answer_review):
+        flash('수정 권한이 없습니다.')
+        return redirect(url_for('cs.review_detail', review_id=review.id))
+
+    review.subject = request.form['subject']
+    review.content = request.form['content']
+
+    db.session.commit()
+    flash('수정되었습니다.')
+
+    return redirect(url_for('cs.review_detail', review_id=review.id))
+
+# =====================
+#   리뷰 삭제
+# =====================
+@bp.route('/review/delete/<int:review_id>/', methods=('POST',))
+def review_delete(review_id):
+    review = Review.query.get_or_404(review_id)
+
+    if not (g.user.admin_role in ['super','manager'] or not review.answer_review):
+        flash('삭제 권한이 없습니다.')
+        return redirect(url_for('cs.review_detail', review_id=review.id))
+
+    db.session.delete(review)
+    db.session.commit()
+
+    flash('삭제되었습니다.')
+    return redirect(url_for('cs.review_list'))
 
 
 # 리뷰 상세
