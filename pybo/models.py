@@ -84,6 +84,10 @@ class Order(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.now())
     order_code = db.Column(db.String(100), unique=True)
 
+    seats_json = db.Column(db.Text)
+    people_json = db.Column(db.Text)
+    schedule_id = db.Column(db.Integer)
+
     product = db.relationship('Product')
     user = db.relationship('User')
 
