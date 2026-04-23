@@ -47,6 +47,16 @@
     font-size: 15px;
 }
 
+.section6 .outside .btn-fixed{
+    width: 100px;
+    margin-right: 20px;
+    color: #ffffff;
+    margin-bottom: 35px;
+}
+.section6 .btn-fixed:last-child {
+    margin-right: 0;
+}
+
 /* ===============================
    본문 전체 영역
 ================================= */
