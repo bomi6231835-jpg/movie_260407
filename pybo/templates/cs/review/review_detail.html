@@ -18,30 +18,25 @@
 
                 <div class="service">
                     <ul class="nav nav-underline">
-
                         <li class="nav-item">
                             <a class="nav-link active" href="{{ url_for('cs.faq_list') }}">FAQ</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                               href="{{ url_for('cs.notice_list') }}">공지사항</a>
+                            <a class="nav-link active" href="{{ url_for('cs.notice_list') }}">공지사항</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link active" href="{{ url_for('cs.review_list') }}">1:1문의</a>
                         </li>
-
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-
     <div class="section6">
         <div class="container">
 
+            <!-- 문의 정보 -->
             <table class="table">
                 <thead>
                 <tr class="table-secondary">
@@ -49,20 +44,15 @@
                     <th>영화관</th>
                     <th>제목</th>
                     <th>회원</th>
-
-                    <!-- 여기 상태칸 추가 -->
                     <th>답변상태</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr>
                     <td class="table-light">{{ review.cs_place }}</td>
                     <td class="table-light">{{ review.cs_ask }}</td>
                     <td class="table-light">{{ review.subject }}</td>
                     <td class="table-light">{{ review.user.username }}</td>
-
-                    <!-- 여기 상태표시 추가 -->
                     <td class="table-light">
                         {% if review.answer_review %}
                             답변완료
@@ -70,42 +60,70 @@
                             답변대기
                         {% endif %}
                     </td>
-
                 </tr>
                 </tbody>
             </table>
-
 
             <div class="outside">
 
                 <div class="answer1">
 
+                    <!-- 이미지 -->
                     {% if review.image_path %}
                         {% for path in review.image_path.split(',') %}
                             <div class="my-3">
-                                <img src="{{ url_for('static', filename=path) }}" alt="첨부 이미지"
-                                     style="max-width: 30%; height: auto;"
+                                <img src="{{ url_for('static', filename=path) }}"
+                                     style="max-width: 30%;"
                                      class="img-thumbnail">
                             </div>
                         {% endfor %}
                     {% endif %}
 
-                    <p style="white-space: pre-wrap">{{ review.content }}</p>
+                    <!-- ======================
+            작성자만 수정/삭제 가능
+       ======================= -->
+                    {% if g.user and g.user.id == review.user_id %}
+                        <!-- ======================
+                         내용은 모두에게 보여야 함
+                    ======================= -->
+                        <p style="white-space: pre-wrap;">
+                            {{ review.content }}
+                        </p>
+
+                        <!-- 수정 -->
+                        <form method="post" action="{{ url_for('cs.review_modify', review_id=review.id) }}">
+
+                            <input type="text" name="subject"
+                                   value="{{ review.subject }}"
+                                   class="form-control mb-2">
+
+                            <textarea name="content" rows="8"
+                                      class="form-control mb-2">{{ review.content }}</textarea>
+
+                            <button type="submit" class="btn btn-primary">
+                                수정
+                            </button>
+
+                        </form>
+
+                        <!-- 삭제 -->
+                        <form method="post"
+                              action="{{ url_for('cs.review_delete', review_id=review.id) }}"
+                              style="margin-top:10px;"
+                              onsubmit="return confirm('정말 삭제하시겠습니까?');">
+
+                            <button type="submit" class="btn btn-danger">
+                                삭제
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
 
                 </div>
-                <div class="input">
-                    <div class="btn-group-custom mt-3">
-                        <button type="submit" class="btn btn-danger btn-fixed" style="width: 100px">
-                            저장
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-fixed"
-                                onclick="location.href='{{ url_for('cs.review_list') }}'" style="width: 100px;">
-                            취소
-                        </button>
-                    </div>
-                </div>
 
-
+                <!-- 관리자 답변 -->
                 <div class="admin_answer">
                     <p>(관리자 답변)</p>
 
@@ -154,19 +172,6 @@
         </div>
     </div>
 
-{% endblock %}
 
 
-{% block script %}
-    <script>
-        const delete_btns = document.querySelectorAll('.delete');
-
-        delete_btns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                if (confirm('정말로 삭제 하시겠습니까?')) {
-                    location.href = this.dataset.uri;
-                }
-            });
-        });
-    </script>
 {% endblock %}
