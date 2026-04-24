@@ -42,6 +42,7 @@
             <!-- 아이디 찾기 -->
             <div id="find-id-box" style="display:none;" class="mt-5 mb-3">
                 <form method="post" action="{{ url_for('auth.find_id') }}">
+
                     <input type="email" name="email"
                            placeholder="이메일로 아이디 찾기"
                            class="form-control mb-2">
@@ -52,6 +53,7 @@
             <!-- 비밀번호 찾기 -->
             <div id="find-pw-box" style="display:none;" class="mt-5 mb-3">
                 <form method="post" action="{{ url_for('auth.find_password') }}">
+
                     <input type="text" name="userid"
                         placeholder="아이디를 입력하세요"
                         class="form-control mb-2">
@@ -101,18 +103,18 @@
 
 {% block script %}
 <script>
-function showFind(type) {
-    const idBox = document.getElementById('find-id-box');
-    const pwBox = document.getElementById('find-pw-box');
+    function showFind(type) {
+        const idBox = document.getElementById('find-id-box');
+        const pwBox = document.getElementById('find-pw-box');
 
-    idBox.style.display = 'none';
-    pwBox.style.display = 'none';
+        idBox.style.display = 'none';
+        pwBox.style.display = 'none';
 
-    if (type === 'id') {
-        idBox.style.display = 'block';
-    } else if (type === 'pw') {
-        pwBox.style.display = 'block';
+        if (type === 'id') {
+            idBox.style.display = 'block';
+        } else if (type === 'pw') {
+            pwBox.style.display = 'block';
+        }
     }
-}
 </script>
 {% endblock %}
