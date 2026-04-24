@@ -20,6 +20,7 @@
 .container .menu li {
     position: relative;
     padding-top: 20px;
+
 }
 
 .container .menu li:after {
@@ -47,6 +48,15 @@
     border: 1px solid #888888;
     font-size: 20px; color: #333;
 }
+
+.tab_menu .service li {
+    width: 280px;
+    line-height: 60px;
+    text-align: center;
+    position: relative;
+    background-color: #fff;
+}
+
 .nav-underline .nav-link {
 
     color: #333333 !important;
@@ -71,6 +81,7 @@
     color: #333333;
     justify-content: space-around;
 }
+
 
 
 /* 섹션01*/

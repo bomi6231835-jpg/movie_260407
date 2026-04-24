@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, g, Flask, current_app, send_from_directory
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, g, Flask, current_app, \
+    send_from_directory
 from sqlalchemy import asc
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -10,7 +11,8 @@ from pybo.models import User, Product, imgs
 import functools, os, uuid
 from werkzeug.utils import secure_filename
 
-bp=Blueprint('auth',__name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__, url_prefix='/auth')
+
 
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -38,50 +40,61 @@ def signup():
             )
             db.session.add(user)
             db.session.commit()
-
             return redirect(url_for('auth.login'))
 
-    return render_template('auth/signup.html', 
-                           form=form,
-                           reset_mode=True)
+    return render_template('auth/signup.html', form=form)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = UserLoginForm()
 
-    if request.method == 'POST' and form.validate_on_submit():
-        error = None
-        user = User.query.filter_by(userid=form.userid.data).first()
+    if request.method == 'POST':
 
-        if not user:
-            error = '존재하지 않는 아이디입니다.'
+        if request.form.get('action') == 'reset':
+            user_id = request.form.get('user_id')
+            new_password = request.form.get('new_password')
 
-        elif not check_password_hash(user.password, form.password.data):
-            error = '비밀번호가 올바르지 않습니다.'
+            user = User.query.get(user_id)
 
-        if error is None:
-            session.clear()
-            session['user_id'] = user.id
+            if user and new_password:
+                user.password = generate_password_hash(new_password)
+                db.session.commit()
+                flash('비밀번호가 변경되었습니다.')
+                return redirect(url_for('auth.login'))
 
-            # 휴면회원 체크
-            if user.status == 'sleep':
-                return redirect(url_for('auth.sleep_member'))
+        elif form.validate_on_submit():
+            user = User.query.filter_by(userid=form.userid.data).first()
 
-            # 관리자
-            if user.is_admin:
-                return redirect(url_for('auth.admin'))
+            if not user:
+                flash('존재하지 않는 아이디입니다.')
+            elif not check_password_hash(user.password, form.password.data):
+                flash('비밀번호가 올바르지 않습니다.')
+            else:
+                session.clear()
+                session['user_id'] = user.id
 
-            return redirect(url_for('main.index'))
+                if user.status == 'sleep':
+                    return redirect(url_for('auth.sleep_member'))
 
-        flash(error)
+                if user.is_admin:
+                    return redirect(url_for('auth.admin'))
 
-    return render_template('auth/login.html', form=form)
+                return redirect(url_for('main.index'))
+
+    return render_template(
+        'auth/login.html',
+        form=form,
+        reset_mode=False,
+        reset_user_id=None
+    )
+
 
 @bp.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('main.index'))
+
 
 @bp.route('/find-id', methods=['POST'])
 def find_id():
@@ -95,42 +108,25 @@ def find_id():
 
     return redirect(url_for('auth.login'))
 
+
 @bp.route('/find-password', methods=['POST'])
 def find_password():
     email = request.form.get('email')
     user = User.query.filter_by(email=email).first()
 
     if user:
-        return redirect(url_for('auth.reset_password', user_id=user.id))
+        return render_template(
+            'auth/login.html',
+            form=UserLoginForm(),
+            reset_mode=True,
+            reset_user_id=user.id
+        )
     else:
         flash('해당 이메일이 존재하지 않습니다.')
         return redirect(url_for('auth.login'))
-    
-@bp.route('/reset-password/<int:user_id>', methods=['GET', 'POST'])
-def reset_password(user_id):
-    user = User.query.get_or_404(user_id)
-
-    if request.method == 'POST':
-        new_password = request.form.get('new_password')
-
-        if not new_password:
-            flash('비밀번호를 입력해주세요.')
-            return redirect(request.url)
-
-        user.password = generate_password_hash(new_password)
-        db.session.commit()
-
-        flash('비밀번호가 변경되었습니다.')
-        return redirect(url_for('auth.login'))
-
-    form = UserLoginForm()
-    
-    return render_template('auth/login.html', 
-                           form=form,
-                           reset_mode=True)
 
 
-#라우팅 함수보다 먼저 실행
+# 라우팅 함수보다 먼저 실행
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
@@ -138,6 +134,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = db.session.get(User, user_id)
+
 
 # 데코레이션 함수
 def login_required(view):
@@ -165,17 +162,18 @@ def login_required(view):
 
     return wrapped_view
 
+
 # =====================
 # 휴면회원 안내 페이지
 # =====================
 @bp.route('/sleep-member')
 @login_required
 def sleep_member():
-
     if g.user.status != 'sleep':
         return redirect(url_for('main.index'))
 
     return render_template('auth/sleep_member.html')
+
 
 # =====================
 # 휴면회원 해제
@@ -183,7 +181,6 @@ def sleep_member():
 @bp.route('/wake-member')
 @login_required
 def wake_member():
-
     if g.user.status == 'sleep':
         g.user.status = 'normal'
         db.session.commit()
@@ -252,7 +249,6 @@ def super_admin_required(view):
 @login_required
 @admin_required
 def admin():
-
     keyword = request.args.get('keyword', '')
 
     users = User.query.filter(
@@ -300,6 +296,7 @@ def admin():
         normal_products=normal_products
     )
 
+
 # ==================================================
 # 회원 상태 변경
 # super / manager 둘 다 가능
@@ -309,7 +306,6 @@ def admin():
 @login_required
 @admin_required
 def change_user_status(user_id):
-
     user = User.query.get_or_404(user_id)
 
     if user.status == 'normal':
@@ -332,7 +328,6 @@ def change_user_status(user_id):
 @login_required
 @super_admin_required
 def grant_admin(user_id):
-
     user = User.query.get_or_404(user_id)
 
     user.is_admin = True
@@ -353,7 +348,6 @@ def grant_admin(user_id):
 @login_required
 @super_admin_required
 def remove_admin(user_id):
-
     user = User.query.get_or_404(user_id)
 
     if user.id == g.user.id:
@@ -371,6 +365,7 @@ def remove_admin(user_id):
 
     flash('관리자 권한이 해제되었습니다.')
     return redirect(url_for('auth.admin'))
+
 
 # ==========================
 # 공지사항 관리자 권한
@@ -395,12 +390,12 @@ def notice_admin_required(view):
 
     return wrapped_view
 
+
 # 상품 관리 함수
 @bp.route('/admin/product/<int:product_id>/status')
 @login_required
 @admin_required
 def change_product_status(product_id):
-
     product = Product.query.get_or_404(product_id)
 
     if product.status == 'normal':
@@ -413,10 +408,10 @@ def change_product_status(product_id):
     flash('상품 상태가 변경되었습니다.')
     return redirect(url_for('auth.admin'))
 
+
 # 메인 배너 수정
 @bp.route('/select_main_slider', methods=['POST'])
 def select_main_slider():
-
     order_data = request.form.get('selected_order')
 
     if not order_data:
@@ -441,14 +436,14 @@ def select_main_slider():
     flash("메인 배너가 변경되었습니다.", "success")
     return redirect(url_for('auth.admin'))
 
+
 # 기본 배너 수정
 @bp.route('/admin/banner/update/<int:banner_id>', methods=['POST'])
 @login_required
 @admin_required
 def update_banner(banner_id):
-
     banner = imgs.query.get_or_404(banner_id)
-    
+
     if banner.img_name not in ['메인 배너1']:
         flash('해당 배너는 수정할 수 없습니다.')
         return redirect(url_for('auth.admin'))
